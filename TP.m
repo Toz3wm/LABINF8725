@@ -27,10 +27,27 @@ Ir=Rehaussement_Contour(image_conv,K);
 imshow(uint8(Ir))
 
 %% Question 5
-% Voir cours : 
-%- Filtre médian? (contre le grain de poivre)
-%- Filtrage spectral (toute une partie sur le traitement du bruit)
+%Sur l'image réhaussée, une partie du bruit qui avait été atténué par le
+%filtrage gaussien est revenu; ce qui est logique puisque le
+%réhaussement des contours réhausse également les contours du bruit. On
+%note cependant qu'il semble de fréquence plus basse qu'auparavant. On
+%remarque également que le bruit de type "poivre et sel" qui existait sur
+%l'image est toujours bien présent.
 
+% Le filtrage gaussien, s'il a réduit le bruit, n'a fait que "diluer" le
+% bruit de type "poivre et sel" qui existe sur l'image. 
+%Pour atténuer ce bruit poivre et sel, on pourrait utiliser un filtrage
+%médian ou médian adaptatif qui est plus puissant. Ce genre de filtre est
+%extrêmement efficace pour atténuer le bruit de type "poivre et sel", et
+%les versions adaptatives ne dégradent pas trop les contours. Si malgré
+%tout les contours étaient trop dégradées, on pourrait appliquer le filtre
+%médian avant d'utiliser le filtre gaussian et le réhaussement. Ainsi le
+%bruit "poivre et sel" ne serait pas dilué par le filtre gaussien, et la
+%dégradation des contours occasionnée par le filtre médian pourrait être
+%atténuée par le rehaussement des contours que nous venons de voir.
+%Eventuellement, il serait aussi possible d'utiliser un filtrage spectral
+%passe-bas qui peut également gérer ce bruit, mais le filtre médian semble
+%plus pertinent.
 %% Exercice 2
 
 clear all
@@ -39,7 +56,12 @@ clc
 
 %% Question 1
 image=imread('pieces','jpg');
-image_gray=0.2989*image(:,:,1)+0.5870*image(:,:,2)+0.1140*image(:,:,3); % On affiche la luminance Y
+%Formule donnant l'image en niveau de gris. 
+%Après vérifications, le résultat est le même que celui renvoyé par
+%rgb2grey
+image_gray=0.2989*image(:,:,1)+0.5870*image(:,:,2)+0.1140*image(:,:,3);
+
+% On affiche la luminance Y
 imshow(image_gray)
 
 %% Question 2
