@@ -53,7 +53,7 @@ imshow(image_b)
 
 el_struct=Element_Structure_Circulaire(9);
 image_f=Fermeture_Binaire(image_b,el_struct);
-
+imshow(image_f)
 %% Méthodes alternatives : 
 % % 1 : imclose
 % el_struct2 = strel('disk',9);
