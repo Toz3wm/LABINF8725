@@ -3,7 +3,7 @@ function [Ieq] = Egalisation_Histogramme(I)
 % I image d'entrée
 % Ieq image de sortie égalisée
 
-hist=imhist(I);
+hist=imhistReDef(I);
 
 [N,M]=size(I);
 Ieq=zeros(N,M);
