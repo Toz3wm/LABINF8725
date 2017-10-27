@@ -167,19 +167,38 @@ imshow(image_b)
 
 %% Question 3
 
-el_struct=Element_Structure_Circulaire(9);
+el_struct=Element_Structure_Circulaire(4);
 image_f=Fermeture_Binaire(image_b,el_struct);
-imshow(image_f)
+
 %% Méthodes alternatives : 
-% % 1 : imclose
-% el_struct2 = strel('disk',9);
-% image_f2 = imclose(image_b,el_struct2);
-% % 2 : imerode et imdilate
-% el_struct3=Element_Structure_Circulaire(9);
-% image_f3=imerode(imdilate(image_b,el_struct3),el_struct3);
-% imshow(image_f3)
+% 1 : imclose
+el_struct2 = strel('disk',9);
+image_f2 = imclose(image_b,el_struct);
+% 2 : imerode et imdilate
+%%
+el_struct3=Element_Structure_Circulaire(4);
+image_f3=imerode(imdilate(image_b,el_struct),el_struct);
 
 
+%%
+image_bool=boolean(image_b);
+image
+n_padx=4;
+n_pady=4;
+[ind_x,ind_y]=find(image_bool); % Cherche les éléments blancs
+for k=1:numel(ind_x)
+    i=ind_x(k);
+    j=ind_y(k);
+    % Pour chaque élément, on regarde si l'élément structurel fait parti
+    % des éléments blancs (si la multiplication du masque du voisinage avec
+    % l'élément structurel est égal à l'élément structurel)
+    if isequal(image_d(i-n_padx:i+n_padx,j-n_pady:j+n_pady).*el_struct,el_struct)
+        % Dans ce cas, on ajoute le pixel central à l'image érodée.
+        image_e(i,j)=1;
+    end
+end
 
 
 >>>>>>> 2555d7d292715211e4f2521aff3fa6cfd3bc1c89
+
+
